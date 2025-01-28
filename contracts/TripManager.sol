@@ -37,6 +37,7 @@ contract TripManager {
         uint256 maxClients
     ) public {
         require(startDate > block.timestamp, "Start date must be in the future");
+        require(endDate >= startDate, "End date must be after start date");
 
         trips.addTripHandler(nextTripId, name, location, startDate, endDate, price, maxClients);
         nextTripId++;
