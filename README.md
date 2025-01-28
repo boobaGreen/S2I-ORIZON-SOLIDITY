@@ -1,5 +1,5 @@
 <div align="left" style="position: relative;">
-<img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" align="right" width="30%" style="margin: -20px 0 0 20px;">
+
 <h1>S2I-ORIZON-SOLIDITY</h1>
 <p align="left">
 	<em><code>❯ REPLACE-ME</code></em>
@@ -229,32 +229,20 @@ TripManager
 - [x] **`Phase 5`**: Testing in Local
 
   - Write comprehensive tests for all functionalities using Hardhat.
+  - Create utils.ts with scripts for creating default trips.
   - Ensure all edge cases are covered, including booking, cancellation, and fund transfers.
   - Deploy the smart contract to the blockchain.
 
-- [x] **`Phase 6`**: Documentation and Finalization
+- [ ] **`Phase 6`**: Deploy and Testing on Sepolia
+
+  - Deploy the smart contract to the Sepolia testnet.
+  - Perform comprehensive testing on Sepolia to ensure all functionalities work as expected.
+
+- [x] **`Phase 7`**: Documentation and Finalization
 
   - Document the smart contract and its functions.
   - Update the README with usage instructions, testing procedures, and project details.
   - Finalize and review the project for any improvements or optimizations.
-
-- [] **`Phase 7`**: Deploy and Testing on Sepolia
-
-  - Deploy the smart contract to the Sepolia testnet.
-  - Perform comprehensive testing on Sepolia to ensure all functionalities work as expected.
-
-- [x] **`Phase 8`**: <strike>Create Presentation PDF for Client</strike>
-
-  - Create a detailed presentation in PDF format to explain the project to the client.
-  - Include all relevant information, diagrams, and explanations of the smart contract functionalities.
-
-- [ ] **`Phase 7`**: Deploy and Testing on Sepolia
-
-  - Deploy the smart contract to the Sepolia testnet.
-  - Perform comprehensive testing on Sepolia to ensure all functionalities work as expected.
-
-- [x] **`Phase 8`**: <strike>Create Presentation PDF for Client</strike>
-
   - Create a detailed presentation in PDF format to explain the project to the client.
   - Include all relevant information, diagrams, and explanations of the smart contract functionalities.
 
