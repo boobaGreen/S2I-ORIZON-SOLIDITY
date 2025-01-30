@@ -132,16 +132,141 @@ Install S2I-ORIZON-SOLIDITY using one of the following methods:
 ❯ npm install
 ```
 
-### 🤖 Usage
+### Usage
 
-Run S2I-ORIZON-SOLIDITY using the following command:
-**Using `npm`** &nbsp; [<img align="center" src="https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white" />](https://www.npmjs.com/)
+The TripManager contract has already been deployed and verified on the Sepolia network. You can interact with the contract directly using MetaMask and the Etherscan interface.
+
+#### Steps to interact with the contract
+
+1. **Add the Sepolia network to MetaMask:**:
+
+   - Open MetaMask and go to the "Networks" section.
+   - Click on "Add Network" and enter the details for the Sepolia network:
+     - Network Name: Sepolia
+     - New RPC URL: https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID
+     - Chain ID: 11155111
+     - Currency Symbol: ETH
+     - Block Explorer URL: https://sepolia.etherscan.io
+
+2. **Access the contract on Etherscan:**:
+
+   - Go to the contract page on Etherscan: TripManager on Sepolia
+   - You can see the contract address in the "Contract" section of the page.
+
+3. **Read and write to the contract:**:
+   - On the contract page on Etherscan, go to the "Contract" tab.
+   - You can use the "Read Contract" and "Write Contract" sections to interact with the contract.
+
+#### Example usage
+
+##### Reading contract data
+
+1. Go to the "Contract" tab and select "Read Contract".
+2. Find the function you want to call, for example, `getAllTrips`.
+3. Click on "Query" to execute the function and view the results.Click on "Query" to execute the function and view the results.
+
+![Read Contract](./images/read_contract.png)
+
+##### Writing data to the contract
+
+1. Go to the "Contract" tab and select "Write Contract".
+2. Connect MetaMask by clicking on "Connect to Web3".
+3. Find the function you want to call, for example, `addTrip`.
+4. Enter the required parameters and click on "Write" to execute the function.
+
+![Write Contract](./images/write_contract.png)
+
+#### Available functions
+
+##### Write functions
+
+- **addTrip**: Adds a new trip.
+- **bookTrip**: Books a trip.
+- **cancelTrip**: Cancels a booking.
+
+##### Funzioni di lettura
+
+- **balancesClients**: Returns the balance of clients.
+- **balancesCompanyHotel**: Returns the balance of the company/hotel.
+- **getAllTrips**: Returns all trips.
+- **getClientBalance**: Returns the balance of a client.
+- **getProviderBalance**: Returns the balance of a provider.
+- **nextTripId**: Returns the next trip ID.
+- **tripBookings**:Returns the bookings of a trip.
+- **tripClientsList**: Returns the list of clients of a trip.
+- **trips**: Returns the details of a trip.
+
+#### Adding a trip
+
+To add a trip, you need to use the JavaScript notation in epoch time. If you want to convert a date from human-readable to epoch time, you can use this free site that offers this service quickly without registration: [Date to Epoch Converter](https://esqsoft.com/javascript_examples/date-to-epoch).
+
+#### IContract address
+
+- **Sepolia**: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
+
+#### Contract verification
+
+The contract has been verified on Etherscan, which means you can view the source code and interact with it directly through the Etherscan interface.
+
+### Deployment
+
+#### Local or Sepolia Deployment using Ignition Module
+
+If you want to deploy the `TripManager` contract locally or on Sepolia, you can use Hardhat Ignition. Follow the steps below to configure and execute the deployment.
+
+##### Using the Existing Deployment Script
+
+The deployment script `deploy.ts` is already present in the `scripts` folder of the project. This script uses Hardhat Ignition to deploy the `TripManager` contract.
+
+##### Running the Deployment
+
+To deploy the contract, use one of the following commands:
+
+- **Local Deployment**:
+
+  ```sh
+  npx hardhat ignition deploy ignition/modules/TripManager.ts --network localhost
+  ```
+
+- **Sepolia Deployment with verification**:
+
+  ```sh
+  npx hardhat ignition deploy ignition/modules/TripManager.ts --network sepolia --verify
+  ```
+
+#### Note on Deployment Address
+
+The deployment will use the addresses and keys specified in the .env file. Make sure these keys are set correctly:
 
 ```sh
-❯ npm start
+
+ SEPOLIA_PRIVATE_KEY=1111111111111111111111111111111111111111111111111111111111111111
+ PROVIDER_PRIVATE_KEY=2222222222222222222222222222222222222222222222222222222222222222
+ CLIENT_PRIVATE_KEY=3333333333333333333333333333333333333333333333333333333333333333
+ INFURA_PROJECT_ID=your_infura_project_id
+ ETHERSCAN_API_KEY=your_etherscan_api_key
+
 ```
 
----
+#### Folders Created by Hardhat Ignition
+
+After running the deployment, Hardhat Ignition creates folders in the ignition/deployments directory to keep track of the deployed contracts. These folders contain the following files:
+
+- journal.jsonl: This file logs every operation performed during the deployment, allowing Hardhat Ignition to resume the deployment in case of errors.
+
+- deployed_addresses.json: This file maps each deployed contract to its address. Example content:
+
+```sh
+{
+  "TripManagerModule#TripManager": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+}
+```
+
+- artifacts: This folder contains the artifacts of the deployed contracts, without subfolders, and the files are named based on the Future ID that created them.
+
+#### Conclusion
+
+By following these steps, you can deploy the TripManager contract locally or on Sepolia using Hardhat Ignition. Make sure to configure the files correctly and use the appropriate commands to execute the deployment.
 
 ### 🧪 Testing
 
