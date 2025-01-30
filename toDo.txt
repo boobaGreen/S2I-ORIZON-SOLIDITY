@@ -34,3 +34,5 @@ npm install --save-dev @nomicfoundation/hardhat-ignition-ethers
 
 npx hardhat run scripts/ignitionDeploy.ts --network localhost
 npx hardhat ignition deploy ignition/modules/TripManager.ts --network sepolia --verify
+
+CUSTOMPRIVATE FILE
