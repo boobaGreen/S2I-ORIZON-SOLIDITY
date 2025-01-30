@@ -216,13 +216,25 @@ If you want to deploy the `TripManager` contract locally or on Sepolia, you can 
 
 ##### Using the Existing Deployment Script
 
-The deployment script `deploy.ts` is already present in the `scripts` folder of the project. This script uses Hardhat Ignition to deploy the `TripManager` contract.
+The deployment script `IgnitionDeploy.ts` is already present in the `scripts` folder of the project. This script uses Hardhat Ignition to deploy the `TripManager` contract.
 
 ##### Running the Deployment
 
 To deploy the contract, use one of the following commands:
 
+- **Start a local node**:
+
+  Open a terminal and run the following command to start a local Hardhat node:
+
+  ```sh
+  npx hardhat node
+  ```
+
+  Leave this terminal open and running.
+
 - **Local Deployment**:
+
+  Open another terminal and use one of the following commands to deploy the contract:
 
   ```sh
   npx hardhat ignition deploy ignition/modules/TripManager.ts --network localhost
@@ -247,6 +259,8 @@ The deployment will use the addresses and keys specified in the .env file. Make 
  ETHERSCAN_API_KEY=your_etherscan_api_key
 
 ```
+
+You can find a `.envfake` file to guide you in creating your own `.env` file. You can also fill it with your data and then rename it to `.env`.
 
 #### Folders Created by Hardhat Ignition
 

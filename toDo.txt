@@ -3,7 +3,7 @@ npm install --save-dev @nomiclabs/hardhat-ethers ethers chai @types/chai @types/
 
 npm install --save-dev @nomicfoundation/hardhat-verify
 Lastly, run the verify task, passing the address of the contract, the network where it's deployed, and the constructor arguments that were used to deploy it (if any):
-
+------------------------------------------------------
 fare esempio per deploy utilizzo in locale
 
 - in un terminale fare partire un nodo locale 

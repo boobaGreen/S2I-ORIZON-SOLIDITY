@@ -14,9 +14,10 @@ async function main() {
   //Leggi l'indirizzo del contratto dal file JSON specifico per la rete
   const addressesFilePath = path.join(
     __dirname,
-    "deployments",
-    `addresses-${chainId}.json`
+    `../../ignition/deployments/chain-${chainId}`,
+    `deployed_addresses.json`
   );
+
   const addresses = JSON.parse(fs.readFileSync(addressesFilePath, "utf-8"));
   const tripManagerAddress = addresses.TripManager;
 
