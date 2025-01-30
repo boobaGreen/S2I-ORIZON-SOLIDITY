@@ -91,8 +91,9 @@ The project involves creating a Solidity smart contract that regulates the entir
     │   └── utils.ts
     ├── test
     │   └── TestTripManager.t.ts
-    ├── toDo.txt
+    ├── .envfake
     └── tsconfig.json
+
 ```
 
 ---
@@ -279,6 +280,82 @@ After running the deployment, Hardhat Ignition creates folders in the ignition/d
 #### Conclusion
 
 By following these steps, you can deploy the TripManager contract locally or on Sepolia using Hardhat Ignition. Make sure to configure the files correctly and use the appropriate commands to execute the deployment.
+
+### Custom scripts
+
+In the `custom` directory, you will find several scripts that interact with the `TripManager` contract. These scripts use the addresses specified in the `.env` file for the provider and client:
+
+```
+PROVIDER_PRIVATE_KEY=2222222222222222222222222222222222222222222222222222222222222222
+CLIENT_PRIVATE_KEY=3333333333333333333333333333333333333333333333333333333333333333
+```
+
+`addAmsterdam.ts`
+This script adds a new trip to Amsterdam with specific parameters. It reads the contract address from the deployed_addresses.json file and interacts with the TripManager contract to add the trip.
+
+`addBerlin.ts` and `addParis.ts`
+These scripts add default trips to Berlin and Paris, respectively. They use predefined data from the utils module, which is also used in the tests.
+
+`bookTrip.ts`
+This script books a trip by specifying the trip ID and the amount of ETH to send. It uses the client address from the `.env` file.
+
+`cancelTrip.ts`
+This script cancels a trip by specifying the trip ID. It uses the client address from the `.env` file.
+
+`getAllTrips.ts`
+This script retrieves all trips from the TripManager contract.
+
+`withdrawFunds.ts`
+This script withdraws funds from a trip. It uses the provider address from the `.env` file.
+
+**Example Usage**
+To use these scripts, follow these steps:
+
+- Ensure your .env file is configured correctly:
+
+```
+PROVIDER_PRIVATE_KEY=2222222222222222222222222222222222222222222222222222222222222222
+CLIENT_PRIVATE_KEY=3333333333333333333333333333333333333333333333333333333333333333
+INFURA_PROJECT_ID=your_infura_project_id
+ETHERSCAN_API_KEY=your_etherscan_api_key
+```
+
+- Run the desired script:
+
+For example, to add a trip to Amsterdam, run:
+
+```
+npx hardhat run scripts/custom/addAmsterdam.ts --network localhost
+```
+
+To book a trip, run:
+
+```
+TRIP_ID=2 ETH_AMOUNT=0.015 npx hardhat run scripts/custom/bookTrip.ts --network localhost
+```
+
+To cancel a trip, run:
+
+```
+TRIP_ID=1 npx hardhat run scripts/custom/cancelTrip.ts --network slocalhost
+```
+
+To close a trip, run:
+
+```
+TRIP_ID=1 npx hardhat run scripts/custom/closeTrip.ts --network localhost
+```
+
+To withdraw funds, run:
+
+```
+npx hardhat run scripts/custom/withdrawFunds.ts --network sepolia
+```
+
+Make sure to replace ` sepolia``` with `localhost` if you are running a local node or vice versa.
+
+##Conclusion##
+By following these steps and using the provided scripts, you can interact with the TripManager contract to add trips, book trips, cancel trips, retrieve all trips, and withdraw funds. Make sure to configure your .env file correctly and use the appropriate commands to execute the scripts.
 
 ### 🧪 Testing
 
