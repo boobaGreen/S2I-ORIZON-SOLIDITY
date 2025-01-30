@@ -352,6 +352,12 @@ To withdraw funds, run:
 npx hardhat run scripts/custom/withdrawFunds.ts --network sepolia
 ```
 
+To show all trips, run:
+
+```
+npx hardhat run scripts/custom/getAllTrips.ts --network sepolia
+```
+
 Make sure to replace ` sepolia``` with `localhost` if you are running a local node or vice versa.
 
 ##Conclusion##
