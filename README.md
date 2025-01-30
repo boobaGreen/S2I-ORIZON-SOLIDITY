@@ -42,7 +42,8 @@ Hardhat is used as the development environment for compiling, deploying, testing
 - [🚀 Getting Started](#-getting-started)
   - [☑️ Prerequisites](#-prerequisites)
   - [⚙️ Installation](#-installation)
-  - [🤖 Usage](#🤖-usage)
+  - [🤖 Usage](#-usage)
+  - [📢 Events](#-events)
   - [🧪 Testing](#🧪-testing)
 - [📌 Project Roadmap](#-project-roadmap)
 - [🔰 Contributing](#-contributing)
@@ -191,7 +192,7 @@ The TripManager contract has already been deployed and verified on the Sepolia n
 - **tripClientsList**: Returns the list of clients of a trip.
 - **trips**: Returns the details of a trip.
 
-#### Adding a trip
+#### Adding a trip time note
 
 To add a trip, you need to use the JavaScript notation in epoch time. If you want to convert a date from human-readable to epoch time, you can use this free site that offers this service quickly without registration: [Date to Epoch Converter](https://esqsoft.com/javascript_examples/date-to-epoch).
 
@@ -203,9 +204,9 @@ To add a trip, you need to use the JavaScript notation in epoch time. If you wan
 
 The contract has been verified on Etherscan, which means you can view the source code and interact with it directly through the Etherscan interface.
 
-### Deployment
+#### Deployment
 
-#### Local or Sepolia Deployment using Ignition Module
+##### Local or Sepolia Deployment using Ignition Module
 
 If you want to deploy the `TripManager` contract locally or on Sepolia, you can use Hardhat Ignition. Follow the steps below to configure and execute the deployment.
 
@@ -241,11 +242,11 @@ To deploy the contract, use one of the following commands:
   npx hardhat ignition deploy ignition/modules/TripManager.ts --network sepolia --verify
   ```
 
-#### Funding addresses
+##### Funding addresses
 
 When deploying locally, the Sepolia private keys specified in the .env file will also be used. During local deployment, these accounts will be assigned 100 ETH by IgnitionDeploy and Hardhat cheat. However, for deploying on Sepolia, you will need to use faucets to obtain Sepolia ETH (SEPOLIA ETH).
 
-#### Note on Deployment Address
+##### Note on Deployment Address
 
 The deployment will use the addresses and keys specified in the .env file. Make sure these keys are set correctly:
 
@@ -261,7 +262,7 @@ The deployment will use the addresses and keys specified in the .env file. Make 
 
 You can find a `.envfake` file to guide you in creating your own `.env` file. You can also fill it with your data and then rename it to `.env`.
 
-#### Folders Created by Hardhat Ignition
+##### Folders Created by Hardhat Ignition
 
 After running the deployment, Hardhat Ignition creates folders in the ignition/deployments directory to keep track of the deployed contracts. These folders contain the following files:
 
@@ -277,7 +278,7 @@ After running the deployment, Hardhat Ignition creates folders in the ignition/d
 
 - artifacts: This folder contains the artifacts of the deployed contracts, without subfolders, and the files are named based on the Future ID that created them.
 
-#### Conclusion
+##### Conclusion
 
 By following these steps, you can deploy the TripManager contract locally or on Sepolia using Hardhat Ignition. Make sure to configure the files correctly and use the appropriate commands to execute the deployment.
 
@@ -363,6 +364,30 @@ Make sure to replace ` sepolia``` with `localhost` if you are running a local no
 ##Conclusion##
 By following these steps and using the provided scripts, you can interact with the TripManager contract to add trips, book trips, cancel trips, retrieve all trips, and withdraw funds. Make sure to configure your .env file correctly and use the appropriate commands to execute the scripts.
 
+### 📢 Events
+
+The TripManager contract emits several events to notify external observers about important actions. These events are defined in the TravelLibrary and include:
+
+-TripAdded: Emitted when a new trip is added.
+-TripBooked: Emitted when a trip is booked.
+-TripCancelled: Emitted when a trip is cancelled.
+-Example Events
+
+```
+event TripAdded(
+    uint256 indexed tripId,
+    string name,
+    string location,
+    uint256 startDate,
+    uint256 endDate,
+    uint256 price,
+    address provider
+);
+```
+
+event TripBooked(uint256 indexed tripId, address indexed client);
+event TripCancelled(uint256 indexed tripId, address indexed client);
+
 ### 🧪 Testing
 
 Run the test suite using the following command:
@@ -413,7 +438,7 @@ TripManager
 
 ---
 
-### 📌 Project Roadmap
+## 📌 Project Roadmap
 
 - [x] **`Phase 1`**: Setup Development Environmen
 
