@@ -134,7 +134,7 @@ Install S2I-ORIZON-SOLIDITY using one of the following methods:
 ❯ npm install
 ```
 
-### Usage
+### 🤖 Usage
 
 The TripManager contract has already been deployed and verified on the Sepolia network. You can interact with the contract directly using MetaMask and the Etherscan interface.
 
