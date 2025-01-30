@@ -141,17 +141,11 @@ The TripManager contract has already been deployed and verified on the Sepolia n
 1. **Add the Sepolia network to MetaMask:**:
 
    - Open MetaMask and go to the "Networks" section.
-   - Click on "Add Network" and enter the details for the Sepolia network:
-     - Network Name: Sepolia
-     - New RPC URL: https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID
-     - Chain ID: 11155111
-     - Currency Symbol: ETH
-     - Block Explorer URL: https://sepolia.etherscan.io
+   - Select SEPOLIA network if not showed enable the `show test network` button
 
 2. **Access the contract on Etherscan:**:
 
-   - Go to the contract page on Etherscan: TripManager on Sepolia
-   - You can see the contract address in the "Contract" section of the page.
+   - Go to the contract page on Etherscan: [TripManager on Sepolia](https://sepolia.etherscan.io/address/0xF61C89dee50ac5E4C1985B774dD5430D2E93DFC4)
 
 3. **Read and write to the contract:**:
    - On the contract page on Etherscan, go to the "Contract" tab.
@@ -246,6 +240,10 @@ To deploy the contract, use one of the following commands:
   npx hardhat ignition deploy ignition/modules/TripManager.ts --network sepolia --verify
   ```
 
+#### Funding addresses
+
+When deploying locally, the Sepolia private keys specified in the .env file will also be used. During local deployment, these accounts will be assigned 100 ETH by IgnitionDeploy and Hardhat cheat. However, for deploying on Sepolia, you will need to use faucets to obtain Sepolia ETH (SEPOLIA ETH).
+
 #### Note on Deployment Address
 
 The deployment will use the addresses and keys specified in the .env file. Make sure these keys are set correctly:
@@ -321,9 +319,13 @@ TripManager
       ✔ should revert if trying to close a trip by a non-provider
       ✔ should revert if trying to close a trip that does not exist
       ✔ should revert if trying to close a trip that has already been closed
+      ✔ should close a trip with multiple clients and transfer funds to the provider
     Withdraw Funds
       ✔ should allow the provider to withdraw funds
       ✔ should revert if there are no funds to withdraw
+
+
+    23 passing (3s)
 ```
 
 ---
@@ -372,7 +374,7 @@ TripManager
   - Ensure all edge cases are covered, including booking, cancellation, and fund transfers.
   - Deploy the smart contract to the blockchain.
 
-- [ ] **`Phase 6`**: Deploy and Verify on Sepolia
+- [x] **`Phase 6`**: Deploy and Verify on Sepolia
 
   - Deploy the smart contract to the Sepolia testnet.
   - Verify the smart contract with Etherscan
@@ -443,5 +445,7 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 ## 🙌 Acknowledgments
 
 - [Solidity Dates and Time Operations](https://soliditytips.com/articles/solidity-dates-time-operations/) - Solidity Dates and Time Operations - An in-depth guide on handling dates and time in Solidity and JavaScript.
+
+- [Hardhad-Ignition](https://hardhat.org/ignition/docs/getting-started#overview/) - Hardhat ignition official documentation
 
 ---
