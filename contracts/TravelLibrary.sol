@@ -84,15 +84,6 @@ library TravelLibrary {
     }
 
     /**
-     * @notice Checks if a trip has ended.
-     * @param trip The trip to check.
-     * @return True if the trip has ended, false otherwise.
-     */
-    function isTripEnded(Trip storage trip) internal view returns (bool) {
-        return block.timestamp > trip.endDate + 1 days;
-    }
-
-    /**
      * @notice Returns all trips.
      * @param trips The list of trips.
      * @return An array of all trips.

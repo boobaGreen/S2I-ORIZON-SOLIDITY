@@ -1,0 +1,5 @@
+https://ethereum.stackexchange.com/questions/162325/hardhat-get-contract-address-and-pass-as-param-to-another-contract-to-deploy
+
+
+verifyon etherscan :
+ https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-verify

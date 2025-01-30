@@ -1,1 +1,36 @@
-readme usage section da COMPLETARE USAGE !!!!!!!!! cioe' da fpartenza
+npm install --save-dev @nomiclabs/hardhat-ethers ethers chai @types/chai @types/node typescript ts-node
+
+
+npm install --save-dev @nomicfoundation/hardhat-verify
+Lastly, run the verify task, passing the address of the contract, the network where it's deployed, and the constructor arguments that were used to deploy it (if any):
+
+fare esempio per deploy utilizzo in locale
+
+- in un terminale fare partire un nodo locale 
+npx hardhat node
+
+- aprire altro terminale e lanciare i test nella nostra rete locale
+npx hardhat test --network localhost
+
+- fare esempio manuale in locale : 
+
+npx hardhat run scripts/deploy.ts --network localhost
+npx hardhat verify --network sepolia 0x4f1AE845b9810B11A8d2045aab1Ab29075C3356E      
+
+npx hardhat run scripts/custom/addBerlinTripNoParam.ts --network localhost
+npx hardhat run scripts/custom/addParisTripNoParam.ts --network sepolia
+
+npx hardhat run scripts/custom/getAllTrips.ts --network sepolia
+
+TRIP_ID=2 ETH_AMOUNT=0.015 npx hardhat run scripts/bookTrip.ts --network localhost
+
+TRIP_ID=1 npx hardhat run scripts/custom/closeTrip.ts --network sepolia
+
+TRIP_ID=1 npx hardhat run scripts/custom/cancelTrip.ts --network sepolia
+
+npx hardhat run scripts/custom/withdrawFunds.ts --network sepolia
+
+npm install --save-dev @nomicfoundation/hardhat-ignition-ethers
+
+npx hardhat run scripts/ignitionDeploy.ts --network localhost
+npx hardhat ignition deploy ignition/modules/TripManager.ts --network sepolia --verify

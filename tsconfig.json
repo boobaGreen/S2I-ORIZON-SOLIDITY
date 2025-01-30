@@ -7,6 +7,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["./scripts", "./test", "test/.OldTestTripManager.t.ts"],
+  "include": ["./scripts", "./test", "test/.OldTestTripManager.t.ts", "utils"],
   "files": ["./hardhat.config.ts"]
 }

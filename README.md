@@ -233,10 +233,10 @@ TripManager
   - Ensure all edge cases are covered, including booking, cancellation, and fund transfers.
   - Deploy the smart contract to the blockchain.
 
-- [ ] **`Phase 6`**: Deploy and Testing on Sepolia
+- [ ] **`Phase 6`**: Deploy and Verify on Sepolia
 
   - Deploy the smart contract to the Sepolia testnet.
-  - Perform comprehensive testing on Sepolia to ensure all functionalities work as expected.
+  - Verify the smart contract with Etherscan
 
 - [x] **`Phase 7`**: Documentation and Finalization
 

@@ -1,4 +1,3 @@
-// REFACTOR usasto sc
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import {
@@ -8,7 +7,7 @@ import {
   addDefaultTripToNeyYork,
   addDefaultTripToRome,
   ONE_DAY,
-} from "../scripts/utils";
+} from "../utils/utils";
 import { reset, time } from "@nomicfoundation/hardhat-network-helpers";
 
 describe("TripManager", function () {
@@ -33,17 +32,7 @@ describe("TripManager", function () {
       expect(trips.length).to.equal(1);
       expect(trips[0].name).to.equal("Trip to Paris");
       expect(trips[0].location).to.equal("Paris");
-      expect(trips[0].price).to.equal(ethers.parseEther("1").toString());
-      expect(trips[0].maxClients).to.equal(10);
-    });
-    it("should add a new trip", async function () {
-      await addDefaultTripToParis(tripManager, provider);
-
-      const trips = await tripManager.getAllTrips();
-      expect(trips.length).to.equal(1);
-      expect(trips[0].name).to.equal("Trip to Paris");
-      expect(trips[0].location).to.equal("Paris");
-      expect(trips[0].price).to.equal(ethers.parseEther("1").toString());
+      expect(trips[0].price).to.equal(ethers.parseEther("0.02").toString());
       expect(trips[0].maxClients).to.equal(10);
     });
 
@@ -56,7 +45,7 @@ describe("TripManager", function () {
         "Nowhere",
         startDate,
         endDate,
-        ethers.parseEther("1").toString(),
+        ethers.parseEther("0.02").toString(),
         10,
         { from: provider.address }
       );
@@ -78,7 +67,7 @@ describe("TripManager", function () {
         "Nowhere",
         startDate,
         endDate,
-        ethers.parseEther("1").toString(),
+        ethers.parseEther("0.02").toString(),
         10,
         { from: provider.address }
       );
@@ -98,10 +87,10 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1").toString() });
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
 
       const clientBalance = await tripManager.getClientBalance(client.address);
-      expect(clientBalance).to.equal(ethers.parseEther("1").toString());
+      expect(clientBalance).to.equal(ethers.parseEther("0.02").toString());
     });
 
     it("should revert if trip starts in less than a day", async function () {
@@ -110,7 +99,7 @@ describe("TripManager", function () {
         "Rome",
         Math.floor(Date.now() / 1000) + ONE_DAY / 24, // startDate: 1 hour from now
         Math.floor(Date.now() / 1000) + ONE_DAY * 4, // endDate: 4 day from now
-        ethers.parseEther("1").toString(), // price: 1 ether
+        ethers.parseEther("0.02").toString(), // price: 0.02 ether
         10, // maxClients
         { from: provider.address }
       );
@@ -118,32 +107,28 @@ describe("TripManager", function () {
       await expect(
         tripManager
           .connect(client)
-          .bookTrip(0, { value: ethers.parseEther("1").toString() })
+          .bookTrip(0, { value: ethers.parseEther("0.02").toString() })
       ).to.be.revertedWith("Trip is too close or already started");
     });
 
     it("should revert if trip has already started", async function () {
       await addDefaultTripToTokyo(tripManager, provider);
       // Simula il passaggio del tempo per rendere la cancellazione troppo a ridosso della partenza
-      // await ethers.provider.send("evm_increaseTime", [86400 * 5]); // Aumenta il tempo di 5 giorni
-      // advance time by one hour and mine a new block
       await time.increase(86400 * 5); // Aumenta il tempo di 5 giorni
       await expect(
         tripManager
           .connect(client)
-          .bookTrip(0, { value: ethers.parseEther("1").toString() })
+          .bookTrip(0, { value: ethers.parseEther("0.012").toString() })
       ).to.be.revertedWith("Trip is too close or already started");
     });
 
     it("should revert if trip has already ended", async function () {
       await addDefaultTripToTokyo(tripManager, provider);
-      // await ethers.provider.send("evm_increaseTime", [86400 * 20]); // Aumenta il tempo di 20 giorni
-      // await ethers.provider.send("evm_mine", []); // Mina il prossimo blocco
       await time.increase(86400 * 20); // Aumenta il tempo di 20 giorni
       await expect(
         tripManager
           .connect(client)
-          .bookTrip(0, { value: ethers.parseEther("1").toString() })
+          .bookTrip(0, { value: ethers.parseEther("0.012").toString() })
       ).to.be.revertedWith("Trip is too close or already started");
     });
 
@@ -153,7 +138,7 @@ describe("TripManager", function () {
       await expect(
         tripManager
           .connect(client)
-          .bookTrip(0, { value: ethers.parseEther("0.5").toString() })
+          .bookTrip(0, { value: ethers.parseEther("0.004").toString() })
       ).to.be.revertedWith("Incorrect amount sent");
     });
 
@@ -162,12 +147,12 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1").toString() });
+        .bookTrip(0, { value: ethers.parseEther("0.008").toString() });
 
       await expect(
         tripManager
           .connect(client)
-          .bookTrip(0, { value: ethers.parseEther("1").toString() })
+          .bookTrip(0, { value: ethers.parseEther("0.008").toString() })
       ).to.be.revertedWith("Trip is already purchased");
     });
 
@@ -175,12 +160,12 @@ describe("TripManager", function () {
       await addDefaultTripToNeyYork(tripManager, provider);
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1").toString() });
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
 
       await expect(
         tripManager
           .connect(anotherClient)
-          .bookTrip(0, { value: ethers.parseEther("1").toString() })
+          .bookTrip(0, { value: ethers.parseEther("0.02").toString() })
       ).to.be.revertedWith("Trip is fully booked");
     });
 
@@ -188,7 +173,7 @@ describe("TripManager", function () {
       await expect(
         tripManager
           .connect(client)
-          .bookTrip(999, { value: ethers.parseEther("1") })
+          .bookTrip(999, { value: ethers.parseEther("0.02") })
       ).to.be.revertedWith("Trip does not exist");
     });
   });
@@ -199,7 +184,7 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1") });
+        .bookTrip(0, { value: ethers.parseEther("0.008") });
 
       await tripManager.connect(client).cancelTrip(0);
 
@@ -212,7 +197,7 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1") });
+        .bookTrip(0, { value: ethers.parseEther("0.008") });
 
       // Simula il passaggio del tempo per rendere la cancellazione troppo a ridosso della partenza
       await ethers.provider.send("evm_increaseTime", [86400 * 1.5]); // Aumenta il tempo di 1.5 giorni
@@ -228,9 +213,9 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1") });
+        .bookTrip(0, { value: ethers.parseEther("0.015") });
 
-      // Simula il passaggio del tempo per rendere la cancellazione dopo la fpartenza del viaggio
+      // Simula il passaggio del tempo per rendere la cancellazione dopo la partenza del viaggio
       await ethers.provider.send("evm_increaseTime", [86400 * 10]); // Aumenta il tempo di 10 giorni
       await ethers.provider.send("evm_mine", []); // Mina il prossimo blocco
 
@@ -244,7 +229,7 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1") });
+        .bookTrip(0, { value: ethers.parseEther("0.02") });
 
       // Saldo del cliente prima della cancellazione
       const initialBalance = await ethers.provider.getBalance(client.address);
@@ -264,13 +249,14 @@ describe("TripManager", function () {
       expect(clientContractBalance).to.equal(ethers.parseEther("0"));
     });
   });
+
   describe("Close Trip", function () {
     it("should close a trip and transfer funds to the provider", async function () {
       await addDefaultTripToParis(tripManager, provider);
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1").toString() });
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
 
       // Simula il passaggio del tempo per rendere il viaggio già terminato
       await time.increase(ONE_DAY * 4); // Aumenta il tempo di 4 giorni
@@ -280,7 +266,7 @@ describe("TripManager", function () {
       const providerBalance = await tripManager.getProviderBalance(
         provider.address
       );
-      expect(providerBalance).to.equal(ethers.parseEther("1").toString());
+      expect(providerBalance).to.equal(ethers.parseEther("0.02").toString());
     });
 
     it("should revert if trying to close a trip that has not ended yet", async function () {
@@ -288,7 +274,7 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1").toString() });
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
 
       await expect(
         tripManager.connect(provider).closeTrip(0)
@@ -300,7 +286,7 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1").toString() });
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
 
       // Simula il passaggio del tempo per rendere il viaggio già terminato
       await time.increase(ONE_DAY * 4); // Aumenta il tempo di 4 giorni
@@ -321,7 +307,7 @@ describe("TripManager", function () {
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1").toString() });
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
 
       // Simula il passaggio del tempo per rendere il viaggio già terminato
       await time.increase(ONE_DAY * 4); // Aumenta il tempo di 4 giorni
@@ -332,34 +318,36 @@ describe("TripManager", function () {
         tripManager.connect(provider).closeTrip(0)
       ).to.be.revertedWith("Trip cannot be closed yet");
     });
+
+    it("should close a trip with multiple clients and transfer funds to the provider", async function () {
+      await addDefaultTripToParis(tripManager, provider);
+
+      await tripManager
+        .connect(client)
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
+      await tripManager
+        .connect(anotherClient)
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
+
+      // Simula il passaggio del tempo per rendere il viaggio già terminato
+      await time.increase(ONE_DAY * 4); // Aumenta il tempo di 4 giorni
+
+      await tripManager.connect(provider).closeTrip(0);
+
+      const providerBalance = await tripManager.getProviderBalance(
+        provider.address
+      );
+      expect(providerBalance).to.equal(ethers.parseEther("0.04").toString());
+    });
   });
-  it("should close a trip with multiple clients and transfer funds to the provider", async function () {
-    await addDefaultTripToParis(tripManager, provider);
 
-    await tripManager
-      .connect(client)
-      .bookTrip(0, { value: ethers.parseEther("1").toString() });
-    await tripManager
-      .connect(anotherClient)
-      .bookTrip(0, { value: ethers.parseEther("1").toString() });
-
-    // Simula il passaggio del tempo per rendere il viaggio già terminato
-    await time.increase(ONE_DAY * 4); // Aumenta il tempo di 4 giorni
-
-    await tripManager.connect(provider).closeTrip(0);
-
-    const providerBalance = await tripManager.getProviderBalance(
-      provider.address
-    );
-    expect(providerBalance).to.equal(ethers.parseEther("2").toString());
-  });
   describe("Withdraw Funds", function () {
     it("should allow the provider to withdraw funds", async function () {
       await addDefaultTripToParis(tripManager, provider);
 
       await tripManager
         .connect(client)
-        .bookTrip(0, { value: ethers.parseEther("1").toString() });
+        .bookTrip(0, { value: ethers.parseEther("0.02").toString() });
 
       // Simula il passaggio del tempo per rendere il viaggio già terminato
       await time.increase(ONE_DAY * 4); // Aumenta il tempo di 4 giorni
@@ -376,7 +364,7 @@ describe("TripManager", function () {
         provider.address
       );
 
-      // Verifica che il saldo del provider sia aumentato di circa 1 ether (meno il gas)
+      // Verifica che il saldo del provider sia aumentato di circa 0.02 ether (meno il gas)
       expect(finalProviderBalance).to.be.above(initialProviderBalance);
     });
 
